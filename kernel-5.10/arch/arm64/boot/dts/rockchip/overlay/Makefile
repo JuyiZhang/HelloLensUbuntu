@@ -53,6 +53,9 @@ dtbo-$(CONFIG_ARCH_ROCKCHIP) += \
 	rk3588s-lubancat-4-cam0-imx415-overlay.dtbo \
 	rk3588s-lubancat-4-cam1-imx415-overlay.dtbo \
 	rk3588s-lubancat-4-cam2-imx415-overlay.dtbo \
+	rk3588s-lubancat-4-cam0-sc035gs-overlay.dtbo \
+	rk3588s-lubancat-4-cam1-sc035gs-overlay.dtbo \
+	rk3588s-lubancat-4-cam2-imx586-overlay.dtbo \
 	rk3588s-lubancat-4-v1-dsi0-800x1280-overlay.dtbo \
 	rk3588s-lubancat-4-v1-dsi0-1024x600-overlay.dtbo \
 	rk3588s-lubancat-4-v1-dsi0-1080p-overlay.dtbo \

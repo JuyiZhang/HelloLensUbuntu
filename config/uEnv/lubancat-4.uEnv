@@ -1,4 +1,4 @@
-overlays=
+overlays=rk3588s-lubancat-4-cam2-imx586-overlay rk3588-lubancat-uart0-m2-overlay
 
 # 正确的方法是将所有需要的设备树覆盖文件名列在一个overlays=后面，用空格分隔。例如：
 # 下面是为鲁班猫4使用两个覆盖层的示例:      

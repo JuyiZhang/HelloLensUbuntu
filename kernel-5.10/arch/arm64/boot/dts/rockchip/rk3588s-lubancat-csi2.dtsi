@@ -12,6 +12,13 @@
 		#clock-cells = <0>;
 	};
 
+	ext_cam_24m_clk: external-camera-24m-clock {
+		compatible = "fixed-clock";
+		clock-frequency = <24000000>;
+		clock-output-names = "ext_cam_24m_clk";
+		#clock-cells = <0>;
+	};
+
 	vdd_cam_5v: vdd-cam-5v-regulator {
 		compatible = "regulator-fixed";
 		regulator-name = "vdd_cam_5v";
@@ -50,6 +57,16 @@
 		regulator-max-microvolt = <1200000>;
 		vin-supply = <&vdd_cam_5v>;
 	};
+
+	sc035gs_dvdd: sc035gs_dvdd {
+		compatible = "regulator-fixed";
+		regulator-name = "sc035gs_dvdd";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <1500000>;
+		regulator-max-microvolt = <1500000>;
+		vin-supply = <&vdd_cam_5v>;
+	};
 };
 
 
@@ -80,6 +97,29 @@
 			};
 		};
 	};
+
+	sc035gs_0: sc035gs-0@30 {
+		compatible = "smartsens,sc035gs";
+		status = "disabled";
+		reg = <0x30>;
+		clocks = <&ext_cam_24m_clk>;
+		clock-names = "xvclk";
+		avdd-supply = <&cam_avdd>;
+		dovdd-supply = <&cam_dovdd>;
+		dvdd-supply = <&sc035gs_dvdd>;
+		reset-gpios = <&gpio1 RK_PA4 GPIO_ACTIVE_LOW>;
+
+		rockchip,camera-module-index = <0>;
+		rockchip,camera-module-facing = "back";
+		rockchip,camera-module-name = "CMK-OT2022-PX1";
+		rockchip,camera-module-lens-name = "IR0147-50IRC-8M-F20";
+		port {
+			sc035gs_out0: endpoint {
+				remote-endpoint = <&dcphy0_in_sc035gs>;
+				data-lanes = <1 2>;
+			};
+		};
+	};
 };
 
 &mipi_dcphy0 {
@@ -102,6 +142,12 @@
 				reg = <0>;
 				remote-endpoint = <&imx415_out0>;
 				data-lanes = <1 2 3 4>;
+			};
+
+			dcphy0_in_sc035gs: endpoint@1 {
+				reg = <1>;
+				remote-endpoint = <&sc035gs_out0>;
+				data-lanes = <1 2>;
 			};
 		};
 
@@ -176,6 +222,29 @@
 			};
 		};
 	};
+
+	sc035gs_1: sc035gs-1@30 {
+		compatible = "smartsens,sc035gs";
+		status = "disabled";
+		reg = <0x30>;
+		clocks = <&ext_cam_24m_clk>;
+		clock-names = "xvclk";
+		avdd-supply = <&cam_avdd>;
+		dovdd-supply = <&cam_dovdd>;
+		dvdd-supply = <&sc035gs_dvdd>;
+		reset-gpios = <&gpio1 RK_PA6 GPIO_ACTIVE_LOW>;
+
+		rockchip,camera-module-index = <1>;
+		rockchip,camera-module-facing = "back";
+		rockchip,camera-module-name = "CMK-OT2022-PX1";
+		rockchip,camera-module-lens-name = "IR0147-50IRC-8M-F20";
+		port {
+			sc035gs_out1: endpoint {
+				remote-endpoint = <&dcphy1_in_sc035gs>;
+				data-lanes = <1 2>;
+			};
+		};
+	};
 };
 
 &mipi_dcphy1 {
@@ -198,6 +267,12 @@
 				reg = <0>;
 				remote-endpoint = <&imx415_out1>;
 				data-lanes = <1 2 3 4>;
+			};
+
+			dcphy1_in_sc035gs: endpoint@1 {
+				reg = <1>;
+				remote-endpoint = <&sc035gs_out1>;
+				data-lanes = <1 2>;
 			};
 		};
 
@@ -272,6 +347,29 @@
 			};
 		};
 	};
+
+	imx586_2: imx586-2@10 {
+		compatible = "sony,imx586";
+		status = "disabled";
+		reg = <0x10>;
+		clocks = <&ext_cam_24m_clk>;
+		clock-names = "xvclk";
+		avdd-supply = <&cam_avdd>;
+		dovdd-supply = <&cam_dovdd>;
+		dvdd-supply = <&cam_dvdd>;
+		reset-gpios = <&gpio1 RK_PB2 GPIO_ACTIVE_LOW>;
+
+		rockchip,camera-module-index = <2>;
+		rockchip,camera-module-facing = "back";
+		rockchip,camera-module-name = "CMK-OT2022-PX1";
+		rockchip,camera-module-lens-name = "IR0147-50IRC-8M-F20";
+		port {
+			imx586_out2: endpoint {
+				remote-endpoint = <&dphy0_in_imx586>;
+				data-lanes = <1 2 3 4>;
+			};
+		};
+	};
 };
 
 &csi2_dphy0_hw {
@@ -295,6 +393,13 @@
 				remote-endpoint = <&imx415_out2>;
 				data-lanes = <1 2 3 4>;
 			};
+
+			dphy0_in_imx586: endpoint@1 {
+				reg = <1>;
+				remote-endpoint = <&imx586_out2>;
+				data-lanes = <1 2 3 4>;
+			};
+
 		};
 
 		port@1 {
